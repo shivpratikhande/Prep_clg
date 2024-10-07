@@ -5,6 +5,6 @@ import { banner } from "../controllers/adminController";
 
 const router = Router()
 
-router.post('/banner', authenticate, authorizeAdmin, banner );
+router.post('/admin', authenticate, authorizeAdmin, banner );
 
 export default router;
