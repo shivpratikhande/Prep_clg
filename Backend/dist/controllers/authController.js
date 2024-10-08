@@ -8,13 +8,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.register = void 0;
 const authService_1 = require("../services/authService");
+const semester_1 = __importDefault(require("../models/semester"));
+const allowedSemesters = ['Semester 1', 'Semester 2', 'Semester 3', 'Semester 4', 'Semester 5'];
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email, password, role } = req.body;
-        yield (0, authService_1.registerUser)(email, password, role);
+        const { email, password, role, semesterName } = req.body;
+        //logic
+        if (role === 'student') {
+            // Validate semester only for students
+            if (!allowedSemesters.includes(semesterName)) {
+                res.status(400).json({ message: "Invalid semester name" });
+                return; // Early return to prevent further execution
+            }
+            const semesterr = yield semester_1.default.findOne({ semesterName });
+            if (!semester_1.default) {
+                res.status(400).json({ message: "Semester not found" });
+                return; // Early return
+            }
+        }
+        else if (role === 'admin') {
+            //nt
+        }
+        else {
+            res.status(400).json({ message: "Invalid role" });
+            return; // Early return
+        }
+        yield (0, authService_1.registerUser)(email, password, role, semesterName);
+        console.log(email, password, role);
         res.status(201).json({ message: 'User registered successfully' });
     }
     catch (error) {
