@@ -1,11 +1,11 @@
 
 import { Request, Response } from 'express';
-import { semisterService } from '../services/semisterServices';
+import { semesterService } from '../services/semesterServices';
 
-export const semister = async (req: Request, res: Response): Promise<void> => {
+export const semester = async (req: Request, res: Response): Promise<void> => {
     try {
         const { semesterName, year, subjects } = req.body;
-        await semisterService(semesterName, year, subjects)
+        await semesterService(semesterName, year, subjects)
         console.log(semesterName, year, subjects)
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {

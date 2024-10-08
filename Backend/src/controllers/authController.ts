@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { registerUser, loginUser } from '../services/authService';
-import cookieParser from "cookie-parser"
-import semister from '../models/semister';
+import semester from '../models/semester';
 
 
 const allowedSemesters = ['Semester 1', 'Semester 2', 'Semester 3', 'Semester 4', 'Semester 5'];
@@ -20,14 +19,13 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         return; // Early return to prevent further execution
       }
 
-      const semester = await semister.findOne({ semesterName });
+      const semesterr = await semester.findOne({ semesterName });
       if (!semester) {
         res.status(400).json({ message: "Semester not found" });
         return; // Early return
       }
     } else if (role === 'admin') {
-      // Admins don't need a semester, but you might still want to enforce validation
-      // For example, you can log this or have other checks if necessary.
+      //nt
     } else {
       res.status(400).json({ message: "Invalid role" });
       return; // Early return

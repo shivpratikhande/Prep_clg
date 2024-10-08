@@ -10,11 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.semester = void 0;
-const semisterServices_1 = require("../services/semisterServices");
+const semesterServices_1 = require("../services/semesterServices");
 const semester = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { semesterName, year, subjects } = req.body;
-        yield (0, semisterServices_1.semisterService)(semesterName, year, subjects);
+        yield (0, semesterServices_1.semesterService)(semesterName, year, subjects);
         console.log(semesterName, year, subjects);
         res.status(201).json({ message: 'User registered successfully' });
     }

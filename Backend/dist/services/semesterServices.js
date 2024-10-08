@@ -12,16 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const semister_1 = __importDefault(require("../models/semister"));
-const authMiddleware_1 = require("../middlewares/authMiddleware");
-const semisterController_1 = require("../controllers/semisterController");
-const router = (0, express_1.Router)();
-// Add a new semester
-router.post('/', authMiddleware_1.authenticate, authMiddleware_1.authorizeAdmin, semisterController_1.semister);
-// Get all semesters
-router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const semesters = yield semister_1.default.find();
-    res.json(semesters);
-}));
-exports.default = router;
+exports.semesterService = void 0;
+const semester_1 = __importDefault(require("../models/semester")); // Ensure you're importing the ISemister interface
+// Service to create a semester
+const semesterService = (semesterName, year, subjects // Changed to an array
+) => __awaiter(void 0, void 0, void 0, function* () {
+    const newSemester = new semester_1.default({
+        semesterName,
+        year,
+        subjects,
+    });
+    return yield newSemester.save();
+});
+exports.semesterService = semesterService;

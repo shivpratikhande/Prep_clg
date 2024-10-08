@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.register = void 0;
 const authService_1 = require("../services/authService");
-const semister_1 = __importDefault(require("../models/semister"));
+const semester_1 = __importDefault(require("../models/semester"));
 const allowedSemesters = ['Semester 1', 'Semester 2', 'Semester 3', 'Semester 4', 'Semester 5'];
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -26,15 +26,14 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 res.status(400).json({ message: "Invalid semester name" });
                 return; // Early return to prevent further execution
             }
-            const semester = yield semister_1.default.findOne({ semesterName });
-            if (!semester) {
+            const semesterr = yield semester_1.default.findOne({ semesterName });
+            if (!semester_1.default) {
                 res.status(400).json({ message: "Semester not found" });
                 return; // Early return
             }
         }
         else if (role === 'admin') {
-            // Admins don't need a semester, but you might still want to enforce validation
-            // For example, you can log this or have other checks if necessary.
+            //nt
         }
         else {
             res.status(400).json({ message: "Invalid role" });
