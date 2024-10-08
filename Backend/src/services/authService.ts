@@ -3,8 +3,8 @@ import { User } from '../models/userModel';
 
 const JWT_SECRET = '1234'; // Yadd this in an environment variable
 
-export const registerUser = async (email: string, password: string, role:string) => {
-  const user = new User({ email, password, role });
+export const registerUser = async (email: string, password: string, role:string, semesterName:string) => {
+  const user = new User({ email, password, role, semesterName });
   return user.save();
 };
 

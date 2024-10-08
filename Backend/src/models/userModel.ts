@@ -5,13 +5,15 @@ export interface IUser extends Document {
   email: string;
   password: string;
   role: String
+  semesterName:String
   comparePassword: (password: string) => Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, enum: ['user', 'admin'], default: 'user' }
+  role: { type: String, enum: ['student', 'admin'], default: 'student' },
+  semesterName:{type:String, required:true}
 });
 
 // Hash password before saving

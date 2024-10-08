@@ -16,8 +16,8 @@ exports.authenticateToken = exports.loginUser = exports.registerUser = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const userModel_1 = require("../models/userModel");
 const JWT_SECRET = '1234'; // Yadd this in an environment variable
-const registerUser = (email, password, role) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = new userModel_1.User({ email, password, role });
+const registerUser = (email, password, role, semesterName) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = new userModel_1.User({ email, password, role, semesterName });
     return user.save();
 });
 exports.registerUser = registerUser;
