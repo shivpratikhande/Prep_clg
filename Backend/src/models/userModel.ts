@@ -13,7 +13,7 @@ const userSchema = new Schema<IUser>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['student', 'admin'], default: 'student' },
-  semesterName:{type:String, required:true}
+  semesterName: { type: String, required: function() { return this.role === 'student'; } }, // Conditional requirement
 });
 
 // Hash password before saving

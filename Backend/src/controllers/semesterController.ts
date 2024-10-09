@@ -61,6 +61,7 @@ class SemesterController {
             }
         }
     }
+    
 }
 
 export default new SemesterController();

@@ -1,12 +1,4 @@
 "use strict";
-/* const allowedSemesters = [
-    { id: 1, name: "Semester 1" },
-    { id: 2, name: "Semester 2" },
-    { id: 3, name: "Semester 3" },
-    { id: 4, name: "Semester 4" },
-    { id: 5, name: "Semester 5" },
-    // Add more as needed
-]; */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -31,7 +23,26 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* const allowedSemesters = [
+    { id: 1, name: "Semester 1" },
+    { id: 2, name: "Semester 2" },
+    { id: 3, name: "Semester 3" },
+    { id: 4, name: "Semester 4" },
+    { id: 5, name: "Semester 5" },
+    // Add more as needed
+]; */
 const mongoose_1 = __importStar(require("mongoose"));
+// Allowed semesters defined earlier
+const allowedSemesters = [
+    { id: 1, name: "Semester 1" },
+    { id: 2, name: "Semester 2" },
+    { id: 3, name: "Semester 3" },
+    { id: 4, name: "Semester 4" },
+    { id: 5, name: "Semester 5" },
+    // Add more as needed
+];
+// Extract allowed semester names for enum validation
+const allowedSemesterNames = allowedSemesters.map(sem => sem.name);
 const ResourceSchema = new mongoose_1.Schema({
     resourceId: { type: mongoose_1.default.Schema.Types.ObjectId, required: true },
     resourceType: { type: String, required: true },
@@ -43,8 +54,9 @@ const SubjectSchema = new mongoose_1.Schema({
     subjectName: { type: String, required: true },
     resources: [ResourceSchema],
 });
+// Update SemesterSchema to include enum validation
 const SemesterSchema = new mongoose_1.Schema({
-    semesterName: { type: String, required: true },
+    semesterName: { type: String, required: true, enum: allowedSemesterNames }, // Validate against allowed semesters
     year: { type: Number, required: true },
     subjects: [SubjectSchema],
 });
