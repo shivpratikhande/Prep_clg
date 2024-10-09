@@ -21,7 +21,7 @@ mongoose_1.default.connect('mongodb+srv://shivpratikhande2017:KWAj0BaKnkHOio9s@c
 app.use('/auth', authRoutes_1.default);
 app.use('/user', userRoutes_1.default);
 app.use("/admin", adminRoutes_1.default);
-app.use("/semester", semesterRoutes_1.default);
+app.use("/api", semesterRoutes_1.default);
 app.listen(3000, () => {
     console.log('Server running on port 3000');
 });

@@ -8,23 +8,80 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.semester = void 0;
-const semesterServices_1 = require("../services/semesterServices");
-const semester = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { semesterName, year, subjects } = req.body;
-        yield (0, semesterServices_1.semesterService)(semesterName, year, subjects);
-        console.log(semesterName, year, subjects);
-        res.status(201).json({ message: 'User registered successfully' });
+const semesterServices_1 = __importDefault(require("../services/semesterServices"));
+class SemesterController {
+    createSemester(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const semester = yield semesterServices_1.default.createSemester(req.body);
+                res.status(201).json({ semesterId: semester._id, semester });
+            }
+            catch (error) { // Specify the type as unknown
+                if (error instanceof Error) {
+                    res.status(400).json({ error: error.message }); // Access error.message safely
+                }
+                else {
+                    res.status(500).json({ error: 'An unexpected error occurred.' });
+                }
+            }
+        });
     }
-    catch (error) {
-        if (error instanceof Error) {
-            res.status(400).json({ message: error.message });
-        }
-        else {
-            res.status(400).json({ message: 'An unknown error occurred' });
-        }
+    addSubject(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { semesterId } = req.params;
+            const { subjectName } = req.body;
+            try {
+                const subject = yield semesterServices_1.default.addSubject(semesterId, subjectName);
+                res.status(201).json(subject);
+            }
+            catch (error) {
+                if (error instanceof Error) {
+                    res.status(400).json({ error: error.message });
+                }
+                else {
+                    res.status(500).json({ error: 'An unexpected error occurred.' });
+                }
+            }
+        });
     }
-});
-exports.semester = semester;
+    addResource(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { semesterId, subjectId } = req.params;
+            try {
+                console.log("in");
+                const resource = yield semesterServices_1.default.addResource(semesterId, subjectId, req.body);
+                console.log("sown");
+                res.status(201).json(resource);
+            }
+            catch (error) {
+                if (error instanceof Error) {
+                    res.status(400).json({ error: error.message });
+                }
+                else {
+                    res.status(500).json({ error: 'An unexpected error occurred.' });
+                }
+            }
+        });
+    }
+    getAllSemesters(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const semesters = yield semesterServices_1.default.getAllSemesters();
+                res.status(200).json(semesters);
+            }
+            catch (error) {
+                if (error instanceof Error) {
+                    res.status(500).json({ error: error.message });
+                }
+                else {
+                    res.status(500).json({ error: 'An unexpected error occurred.' });
+                }
+            }
+        });
+    }
+}
+exports.default = new SemesterController();

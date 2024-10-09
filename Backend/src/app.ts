@@ -20,7 +20,7 @@ mongoose.connect('mongodb+srv://shivpratikhande2017:KWAj0BaKnkHOio9s@cluster0.gg
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use("/admin",adminRoutes)
-app.use("/semester",semesterRoutes)
+app.use("/api",semesterRoutes)
 
 
 app.listen(3000, () => {

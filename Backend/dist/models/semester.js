@@ -1,4 +1,12 @@
 "use strict";
+/* const allowedSemesters = [
+    { id: 1, name: "Semester 1" },
+    { id: 2, name: "Semester 2" },
+    { id: 3, name: "Semester 3" },
+    { id: 4, name: "Semester 4" },
+    { id: 5, name: "Semester 5" },
+    // Add more as needed
+]; */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -24,28 +32,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const allowedSemesters = [
-    { id: 1, name: "Semester 1" },
-    { id: 2, name: "Semester 2" },
-    { id: 3, name: "Semester 3" },
-    { id: 4, name: "Semester 4" },
-    { id: 5, name: "Semester 5" },
-    // Add more as needed
-];
 const ResourceSchema = new mongoose_1.Schema({
-    resourceId: { type: mongoose_1.default.Types.ObjectId, default: new mongoose_1.default.Types.ObjectId() },
-    resourceType: { type: String, enum: ['pdf', 'video'], required: true },
+    resourceId: { type: mongoose_1.default.Schema.Types.ObjectId, required: true },
+    resourceType: { type: String, required: true },
     resourceUrl: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
 });
 const SubjectSchema = new mongoose_1.Schema({
-    subjectId: { type: mongoose_1.default.Types.ObjectId, default: new mongoose_1.default.Types.ObjectId() },
+    subjectId: { type: mongoose_1.default.Schema.Types.ObjectId, required: true },
     subjectName: { type: String, required: true },
     resources: [ResourceSchema],
 });
 const SemesterSchema = new mongoose_1.Schema({
-    semesterName: { type: String, required: true, enum: allowedSemesters.map(sem => sem.name) },
+    semesterName: { type: String, required: true },
     year: { type: Number, required: true },
     subjects: [SubjectSchema],
 });
-exports.default = mongoose_1.default.model('Semester', SemesterSchema);
+const Semester = mongoose_1.default.model('Semester', SemesterSchema);
+exports.default = Semester;

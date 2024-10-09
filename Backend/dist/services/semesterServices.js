@@ -12,16 +12,53 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.semesterService = void 0;
-const semester_1 = __importDefault(require("../models/semester")); // Ensure you're importing the ISemister interface
-// Service to create a semester
-const semesterService = (semesterName, year, subjects // Changed to an array
-) => __awaiter(void 0, void 0, void 0, function* () {
-    const newSemester = new semester_1.default({
-        semesterName,
-        year,
-        subjects,
-    });
-    return yield newSemester.save();
-});
-exports.semesterService = semesterService;
+const semester_1 = __importDefault(require("../models/semester"));
+const mongoose_1 = __importDefault(require("mongoose"));
+class SemesterService {
+    createSemester(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const semester = new semester_1.default(data);
+            return yield semester.save();
+        });
+    }
+    addSubject(semesterId, subjectName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const semester = yield semester_1.default.findById(semesterId);
+            if (!semester)
+                throw new Error('Semester not found');
+            const subject = {
+                subjectId: new mongoose_1.default.Types.ObjectId(),
+                subjectName,
+                resources: [],
+            };
+            semester.subjects.push(subject);
+            yield semester.save();
+            return subject;
+        });
+    }
+    addResource(semesterId, subjectId, resourceData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const semester = yield semester_1.default.findById(semesterId);
+            if (!semester)
+                throw new Error('Semester not found');
+            const subject = semester.subjects.find((s) => s.subjectId.equals(subjectId));
+            if (!subject)
+                throw new Error('Subject not found');
+            const resource = {
+                resourceId: new mongoose_1.default.Types.ObjectId(),
+                resourceType: resourceData.resourceType,
+                resourceUrl: resourceData.resourceUrl,
+                createdAt: new Date(),
+            };
+            subject.resources.push(resource);
+            yield semester.save();
+            return resource;
+        });
+    }
+    getAllSemesters() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield semester_1.default.find({}, { semesterName: 1, year: 1 });
+        });
+    }
+}
+exports.default = new SemesterService();

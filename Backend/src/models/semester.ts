@@ -1,5 +1,15 @@
-import mongoose, { Document, Schema } from 'mongoose';
 
+/* const allowedSemesters = [
+    { id: 1, name: "Semester 1" },
+    { id: 2, name: "Semester 2" },
+    { id: 3, name: "Semester 3" },
+    { id: 4, name: "Semester 4" },
+    { id: 5, name: "Semester 5" },
+    // Add more as needed
+]; */
+import mongoose, { Schema, Document } from 'mongoose';
+
+// Allowed semesters defined earlier
 const allowedSemesters = [
     { id: 1, name: "Semester 1" },
     { id: 2, name: "Semester 2" },
@@ -9,14 +19,17 @@ const allowedSemesters = [
     // Add more as needed
 ];
 
-interface IResource {
+// Extract allowed semester names for enum validation
+const allowedSemesterNames = allowedSemesters.map(sem => sem.name);
+
+export interface IResource {
     resourceId: mongoose.Types.ObjectId;
-    resourceType: 'pdf' | 'video';
+    resourceType: string;
     resourceUrl: string;
     createdAt: Date;
 }
 
-interface ISubject {
+export interface ISubject {
     subjectId: mongoose.Types.ObjectId;
     subjectName: string;
     resources: IResource[];
@@ -28,23 +41,26 @@ export interface ISemester extends Document {
     subjects: ISubject[];
 }
 
-const ResourceSchema: Schema = new Schema({
-    resourceId: { type: mongoose.Types.ObjectId, default: new mongoose.Types.ObjectId() },
-    resourceType: { type: String, enum: ['pdf', 'video'], required: true },
+const ResourceSchema = new Schema<IResource>({
+    resourceId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    resourceType: { type: String, required: true },
     resourceUrl: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
 });
 
-const SubjectSchema: Schema = new Schema({
-    subjectId: { type: mongoose.Types.ObjectId, default: new mongoose.Types.ObjectId() },
+const SubjectSchema = new Schema<ISubject>({
+    subjectId: { type: mongoose.Schema.Types.ObjectId, required: true },
     subjectName: { type: String, required: true },
     resources: [ResourceSchema],
 });
 
-const SemesterSchema: Schema = new Schema({
-    semesterName: { type: String, required: true, enum: allowedSemesters.map(sem => sem.name) },
+// Update SemesterSchema to include enum validation
+const SemesterSchema = new Schema<ISemester>({
+    semesterName: { type: String, required: true, enum: allowedSemesterNames }, // Validate against allowed semesters
     year: { type: Number, required: true },
     subjects: [SubjectSchema],
 });
 
-export default mongoose.model<ISemester>('Semester', SemesterSchema);
+const Semester = mongoose.model<ISemester>('Semester', SemesterSchema);
+
+export default Semester;

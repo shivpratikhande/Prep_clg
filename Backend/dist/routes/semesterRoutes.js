@@ -1,27 +1,13 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const semester_1 = __importDefault(require("../models/semester"));
-const authMiddleware_1 = require("../middlewares/authMiddleware");
-const semesterController_1 = require("../controllers/semesterController");
-const router = (0, express_1.Router)();
-// Add a new semester
-router.post('/', authMiddleware_1.authenticate, authMiddleware_1.authorizeAdmin, semesterController_1.semester);
-// Get all semesters
-router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const semesters = yield semester_1.default.find();
-    res.json(semesters);
-}));
+const express_1 = __importDefault(require("express"));
+const semesterController_1 = __importDefault(require("../controllers/semesterController"));
+const router = express_1.default.Router();
+router.post('/semesters', semesterController_1.default.createSemester);
+router.post('/semesters/:semesterId/subjects', semesterController_1.default.addSubject);
+router.post('/semesters/:semesterId/subjects/:subjectId/resources', semesterController_1.default.addResource);
+router.get('/semesters', semesterController_1.default.getAllSemesters);
 exports.default = router;
