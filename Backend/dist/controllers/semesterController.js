@@ -83,5 +83,22 @@ class SemesterController {
             }
         });
     }
+    getSubjectsBySemester(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { semesterId } = req.params;
+            try {
+                const subjects = yield semesterServices_1.default.getSubjectsBySemester(semesterId);
+                res.json(subjects);
+            }
+            catch (error) {
+                if (error instanceof Error) {
+                    res.status(500).json({ error: error.message });
+                }
+                else {
+                    res.status(500).json({ error: 'An unexpected error occurred.' });
+                }
+            }
+        });
+    }
 }
 exports.default = new SemesterController();

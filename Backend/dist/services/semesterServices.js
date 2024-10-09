@@ -60,5 +60,15 @@ class SemesterService {
             return yield semester_1.default.find({}, { semesterName: 1, year: 1 });
         });
     }
+    getSubjectsBySemester(semesterId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const semester = yield semester_1.default.findById(semesterId)
+                .populate('subjects', 'subjectName'); // Populate subjects
+            if (!semester) {
+                throw new Error('Semester not found');
+            }
+            return semester.subjects; // Return the populated subjects
+        });
+    }
 }
 exports.default = new SemesterService();

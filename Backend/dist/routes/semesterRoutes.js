@@ -10,4 +10,5 @@ router.post('/semesters', semesterController_1.default.createSemester);
 router.post('/semesters/:semesterId/subjects', semesterController_1.default.addSubject);
 router.post('/semesters/:semesterId/subjects/:subjectId/resources', semesterController_1.default.addResource);
 router.get('/semesters', semesterController_1.default.getAllSemesters);
+router.get('/semesters/:semesterId/subjects', semesterController_1.default.getSubjectsBySemester.bind(semesterController_1.default));
 exports.default = router;

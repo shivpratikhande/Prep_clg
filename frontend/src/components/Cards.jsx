@@ -16,15 +16,15 @@ function Cards({ item }) {
       >
         <figure>
           <img
-            src={item.image}
-            alt={item.name}
+            src={"https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"}
+            alt={"image"}
             className="w-32 h-32 object-cover mx-auto rounded-lg"
           />
         </figure>
         <div className="card-body text-center flex flex-col items-center">
-          <h2 className="card-title text-lg font-semibold">{item.name}</h2>
-          <p className="text-sm text-gray-600">{item.title}</p>
-        </div>
+          <h2 className="card-title text-lg font-semibold">{item}</h2>
+{/*           <p className="text-sm text-gray-600">{"dull form"}</p>       excluded
+ */}        </div>
       </div>
     </div>
   );

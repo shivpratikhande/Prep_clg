@@ -61,7 +61,20 @@ class SemesterController {
             }
         }
     }
-    
+    async getSubjectsBySemester(req: Request, res: Response) {
+        const { semesterId } = req.params;
+        try {
+            const subjects = await semesterService.getSubjectsBySemester(semesterId);
+            res.json(subjects);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                res.status(500).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'An unexpected error occurred.' });
+            }
+        }
+    }
+
 }
 
 export default new SemesterController();

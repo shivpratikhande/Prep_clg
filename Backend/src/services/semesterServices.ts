@@ -44,6 +44,14 @@ class SemesterService {
     async getAllSemesters(): Promise<ISemester[]> {
         return await Semester.find({}, { semesterName: 1, year: 1 });
     }
+    async getSubjectsBySemester(semesterId: string): Promise<ISubject[]> {
+        const semester = await Semester.findById(semesterId)
+            .populate('subjects', 'subjectName'); // Populate subjects
+        if (!semester) {
+            throw new Error('Semester not found');
+        }
+        return semester.subjects; // Return the populated subjects
+    }
 }
 
 export default new SemesterService();
