@@ -7,11 +7,9 @@ function Resource() {
   return (
     <>
       <div className="dark:bg-slate-900 dark:text-white">
-        <Navbar />
         <div className="min-h-screen">
           <Resources />
         </div>
-        <Footer />
       </div>
     </>
   );

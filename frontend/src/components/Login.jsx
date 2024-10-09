@@ -50,7 +50,6 @@ function Login() {
                     </span>
                   </div>
                 </div>
-                {/* Additional Buttons */}
                 <a href="/Register" className="block mt-8">
                   <button className="btn btn-outline w-full bg-green-300 text-black text-md rounded-full hover:bg-green-300 hover:text-black transition duration-150">
                     Register

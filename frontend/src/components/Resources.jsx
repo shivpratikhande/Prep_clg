@@ -8,10 +8,10 @@ function Resources() {
       <div className="max-x-screen-2xl container mx-auto md:px-20 px-4">
         <div className="mt-20 items-center justify-center text-center">
           <h1 className="text-2xl font-semibold md:text-4xl">
-            Helpful Textbook Resources for Students
+            Helpful Resources for Students
           </h1>
           <p className="mt-5">
-            For any student, getting access to textbooks on dozens of subjects
+            For any student, getting access to textbooks,videos,question papers on dozens of subjects
             can be an expensive affair. It is also not practical to purchase
             entire textbooks just to access a small part of it for references.
             That's where online open textbook sources and other online libraries
