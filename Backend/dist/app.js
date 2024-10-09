@@ -10,7 +10,9 @@ const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
 const semesterRoutes_1 = __importDefault(require("./routes/semesterRoutes"));
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
 // Connect to MongoDB

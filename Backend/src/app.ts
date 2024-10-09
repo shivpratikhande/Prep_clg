@@ -6,8 +6,12 @@ import cookieParser from "cookie-parser"
 import adminRoutes from "./routes/adminRoutes"
 import semesterRoutes from "./routes/semesterRoutes"
 
+import cors from 'cors';
+
 const app = express();
 
+
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
