@@ -45,18 +45,29 @@ const allowedSemesters = [
 const allowedSemesterNames = allowedSemesters.map(sem => sem.name);
 const ResourceSchema = new mongoose_1.Schema({
     resourceId: { type: mongoose_1.default.Schema.Types.ObjectId, required: true },
-    resourceType: { type: String, required: true },
+    resourceType: {
+        type: String,
+        required: true,
+        enum: ['pdf', 'video'], // Allowed values for resourceType
+    },
     resourceUrl: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
 });
+//
+const ChapterSchema = new mongoose_1.Schema({
+    chapterId: { type: mongoose_1.default.Schema.Types.ObjectId, required: true },
+    chapterName: { type: String, required: true },
+    resources: [ResourceSchema],
+});
+//
 const SubjectSchema = new mongoose_1.Schema({
     subjectId: { type: mongoose_1.default.Schema.Types.ObjectId, required: true },
     subjectName: { type: String, required: true },
-    resources: [ResourceSchema],
+    chapters: [ChapterSchema],
 });
 // Update SemesterSchema to include enum validation
 const SemesterSchema = new mongoose_1.Schema({
-    semesterName: { type: String, required: true, enum: allowedSemesterNames }, // Validate against allowed semesters
+    semesterName: { type: String, required: true, enum: allowedSemesterNames, unique: true },
     year: { type: Number, required: true },
     subjects: [SubjectSchema],
 });

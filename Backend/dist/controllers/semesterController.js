@@ -48,12 +48,33 @@ class SemesterController {
             }
         });
     }
-    addResource(req, res) {
+    addchapter(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { semesterId, subjectId } = req.params;
+            const { chapterName } = req.body;
+            try {
+                const subject = yield semesterServices_1.default.addChapter(semesterId, subjectId, chapterName);
+                res.status(201).json(subject);
+            }
+            catch (error) {
+                if (error instanceof Error) {
+                    res.status(400).json({ error: error.message });
+                }
+                else {
+                    res.status(500).json({ error: 'An unexpected error occurred.' });
+                }
+            }
+        });
+    }
+    addResource(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { semesterId, subjectId, chapterId } = req.params;
+            console.log(chapterId);
+            console.log(semesterId);
+            console.log(subjectId);
             try {
                 console.log("in");
-                const resource = yield semesterServices_1.default.addResource(semesterId, subjectId, req.body);
+                const resource = yield semesterServices_1.default.addResource(semesterId, subjectId, chapterId, req.body);
                 console.log("sown");
                 res.status(201).json(resource);
             }

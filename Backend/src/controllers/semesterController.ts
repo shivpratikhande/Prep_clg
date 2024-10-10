@@ -31,12 +31,32 @@ class SemesterController {
         }
     }
 
-    async addResource(req: Request, res: Response) {
+    async addchapter(req: Request, res: Response) {
         const { semesterId, subjectId } = req.params;
+        const { chapterName } = req.body; 
+
+        try {
+            const subject = await semesterService.addChapter(semesterId, subjectId, chapterName);
+            res.status(201).json(subject);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                res.status(400).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'An unexpected error occurred.' });
+            }
+        }
+    }
+
+    async addResource(req: Request, res: Response) {
+        const { semesterId, subjectId, chapterId } = req.params;
+        console.log(chapterId)
+        console.log(semesterId)
+        console.log(subjectId)
+
 
         try {
             console.log("in")
-            const resource = await semesterService.addResource(semesterId, subjectId, req.body);
+            const resource = await semesterService.addResource(semesterId, subjectId, chapterId, req.body);
             console.log("sown")
 
             res.status(201).json(resource);
