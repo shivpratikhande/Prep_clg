@@ -48,7 +48,7 @@ function Login() {
         semester: formData.role === "Student" ? formData.semester : undefined,
       }, { withCredentials: true }); 
       console.log("Login successful:", response.data);
-      navigate("/Resources"); // Redirect after successful login
+      navigate("/resources"); // Redirect after successful login
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "Login failed. Please try again.";

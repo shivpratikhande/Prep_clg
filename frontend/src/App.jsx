@@ -13,20 +13,23 @@ import About from "./components/About.jsx";
 
 function App() {
   return (
-      <div className="min-h-screen">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/access" element={<Access />} />
-          <Route path="/syllabus" element={<Syllabus />} />
-          <Route path="/Notes" element={<Notes />} />
-          <Route path="/Textbook" element={<Textbook />} />
-          <Route path="/Questionpapers" element={<Questionpapers />} />
-        </Routes>
-      </div>
+    <div className="min-h-screen">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/resources" element={<Resources />} />
+        <Route path="/resources">
+          <Route path="syllabus" element={<Syllabus />} />
+          <Route path="notes" element={<Notes />} />
+          <Route path="textbook" element={<Textbook />} />
+          <Route path="questionpapers" element={<Questionpapers />} />
+        </Route>
+
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/access" element={<Access />} />
+      </Routes>
+    </div>
   );
 }
 

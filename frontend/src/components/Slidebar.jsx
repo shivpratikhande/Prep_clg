@@ -11,7 +11,7 @@ const Slidebar = () => {
         <li>
           {/* Navigation link to "Syllabus" */}
           <Link
-            to="/syllabus"
+            to="/resources/syllabus"
             className="btn bg-green-300 text-black w-full hover:bg-green-400"
           >
             Syllabus
@@ -20,7 +20,7 @@ const Slidebar = () => {
         <li>
           {/* Navigation link to "Notes" */}
           <Link
-            to="/notes"
+            to="/resources/notes"
             className="btn bg-green-300 text-black w-full hover:bg-green-400"
           >
             Notes
@@ -29,7 +29,7 @@ const Slidebar = () => {
         <li>
           {/* Navigation link to "Textbooks" */}
           <Link
-            to="/textbook"
+            to="/resources/textbook"
             className="btn bg-green-300 text-black w-full hover:bg-green-400"
           >
             Textbooks
@@ -38,7 +38,7 @@ const Slidebar = () => {
         <li>
           {/* Navigation link to "Questions" */}
           <Link
-            to="/questionpapers"
+            to="/resources/questionpapers"
             className="btn bg-green-300 text-black w-full hover:bg-green-400"
           >
             Questions Papers

@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
-function Cards({ item , navi}) {
+function Cards({ item, navi }) {
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleCardClick = () => {
-    navigate(`/syllabus`); // Navigate to the Access component
+    navigate(navi); // Use navi for dynamic navigation
   };
 
   return (
@@ -23,8 +23,8 @@ function Cards({ item , navi}) {
         </figure>
         <div className="card-body text-center flex flex-col items-center">
           <h2 className="card-title text-lg font-semibold">{item}</h2>
-{/*           <p className="text-sm text-gray-600">{"dull form"}</p>       excluded
- */}        </div>
+          {/* <p className="text-sm text-gray-600">{"dull form"}</p> excluded */}
+        </div>
       </div>
     </div>
   );
