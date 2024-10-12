@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Cards from "./Cards.jsx";
-import list from "../../public/list.json";
+import lisst from "../../public/lisst.json"
 
 function Resources() {
   const [semesters, setSemesters] = useState([]);
@@ -15,13 +15,16 @@ function Resources() {
   useEffect(() => {
     const fetchSemesters = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/semesters');
+        const response = await fetch('http://localhost:3000/api/semesters', {
+
+          credentials: 'include',
+        });
+        console.log(response)
         if (!response.ok) {
           throw new Error('Failed to fetch semesters');
         }
         const data = await response.json();
         setSemesters(data);
-        console.log(data)
       } catch (err) {
         setError(err.message);
       } finally {
@@ -38,7 +41,6 @@ function Resources() {
       if (!selectedSemesterId) return; // Exit if no semester is selected
       setLoadingSubjects(true);
       setErrorSubjects(null);
-      console.log(selectedSemesterId)
 
       try {
         const response = await fetch(`http://localhost:3000/api/semesters/${selectedSemesterId}/subjects`);
@@ -47,7 +49,6 @@ function Resources() {
         }
         const data = await response.json();
         setSubjects(data);
-        console.log(data)
       } catch (err) {
         setErrorSubjects(err.message);
       } finally {
@@ -57,6 +58,18 @@ function Resources() {
 
     fetchSubjects();
   }, [selectedSemesterId]);
+
+  const handleSemesterChange = (e) => {
+    const id = e.target.value;
+    setSelectedSemesterId(id);
+    localStorage.setItem("selectedSemesterId", id);
+  };
+
+  const handleSubjectChange = (id) => {
+    setSelectedSubId(id);
+    localStorage.setItem("selectedSubId", id);
+    // Navigate to the resource page or perform the desired action
+  };
 
   if (loading) {
     return <div>Loading semesters...</div>;
@@ -84,17 +97,12 @@ function Resources() {
             textbooks online.
           </p>
         </div>
-        {/* <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4">
-                    {list.map((item) => (
-                        <Cards key={item.id} item={item} />
-                    ))}
-                </div> */}
 
         {/* Semester Selection */}
         <div className="mt-12">
           <h2 className="text-xl font-semibold">Select a Semester</h2>
           <select
-            onChange={(e) => setSelectedSemesterId(e.target.value)}
+            onChange={handleSemesterChange}
             value={selectedSemesterId || ""}
             className="mt-2 p-2 border rounded"
           >
@@ -113,20 +121,25 @@ function Resources() {
         {subjects.length > 0 && (
           <div className="mt-12">
             <h2 className="text-xl font-semibold">Subjects for Selected Semester</h2>
-            <ul>
-            {/*   {subjects.map((subject) => (
-                <li key={subject._id}>
-                  {subject.subjectName}
-                </li>
-              ))} */}
+            <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4 justify-center">
+              {subjects.map((subject) => (
+                <Cards key={subject.id} item={subject.subjectName} navi={subject.subjectId} onClick={() => handleSubjectChange(subject.subjectId)} />
+              ))}
 
-              <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4 justify-center ">
-                {subjects.map((subject) => (
-                  <Cards key={subject.id} item={subject.subjectName} />
-                ))}
-              </div>
+              {
+                lisst.map((e) => {
+                  <>
+                    <h1> {e.name}</h1>
+                    <video src={e.youtubeLink}></video>
+                  </>
 
-            </ul>
+
+                })
+
+              }
+
+
+            </div>
           </div>
         )}
       </div>

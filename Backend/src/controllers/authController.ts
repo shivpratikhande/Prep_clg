@@ -20,7 +20,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       }
 
       const semesterr = await semester.findOne({ semesterName });
-      if (!semester) {
+      if (!semesterr) {
         res.status(400).json({ message: "Semester not found" });
         return; // Early return
       }
@@ -50,7 +50,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     res.cookie('token', token, {
       httpOnly: true,  // Prevents JavaScript access
-      secure: process.env.NODE_ENV === 'production',  // Cookie is only sent over HTTPS in production
+      secure: false,
+      /* sameSite: 'None'   */ // Cookie is only sent over HTTPS in production
      // sameSite: 'Strict', // Helps prevent CSRF attacks
     });
 

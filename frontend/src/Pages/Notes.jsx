@@ -1,5 +1,6 @@
 import React from "react";
 import Slidebar from "../components/Slidebar";
+import lisst from "../../public/lisst.json"
 
 const Notes = () => {
   const notes = [
@@ -42,6 +43,13 @@ const Notes = () => {
     },
   ];
 
+  const pdfUrl = "https://drive.google.com/file/d/1tnofXBKoQiFoNx6HL5smmyxrWeLQ8QqU/preview"
+
+  const openPdf = (event) => {
+    event.preventDefault(); 
+    window.open(pdfUrl, '_blank', 'width=800,height=600'); 
+};
+
   return (
     <div className="flex space-x-2 min-h-screen">
       {/* Sidebar */}
@@ -52,30 +60,37 @@ const Notes = () => {
         <h1 className="text-3xl font-bold mb-6">Notes</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-black ">
-          {notes.map((note) => (
+          {lisst.map((note) => (
             <div key={note.id} className="bg-white shadow-xl rounded-lg p-4 flex flex-col">
-              <h2 className="text-xl font-semibold mb-2">{note.title}</h2>
+              <h2 className="text-xl font-semibold mb-2">{note.name}</h2>
               <p className="mb-4 flex-grow">{note.description}</p>
-              <a
-                href={note.downloadLink}
+              {/* <a
+                href={note.pdfLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-green-300 hover:bg-green-400 text-black py-2 px-4 rounded mt-auto"
               >
                 Open PDF
-              </a>
+              </a> */}
+
+              <iframe src={pdfUrl}
+                className="inline-block bg-green-300 hover:bg-green-400 text-black py-2 px-4 rounded mt-auto"
+                frameborder="0" width="100%" height="500" onClick={openPdf}>
+                Open pdf
+              </iframe>
+
             </div>
           ))}
         </div>
 
         {/* Videos Section */}
-        <h1 className="text-3xl font-bold mt-10 mb-6">Videos</h1>
+        <h1 classNsyllabusame="text-3xl font-bold mt-10 mb-6">Videos</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-black ">
-          {videos.map((video) => (
+          {lisst.map((video) => (
             <div key={video.id} className="bg-white shadow-xl rounded-lg p-4 flex flex-col">
-              <h2 className="text-xl font-semibold mb-2">{video.title}</h2>
+              <h2 className="text-xl font-semibold mb-2">{video.name}</h2>
               <a
-                href={video.videoLink}
+                href={video.youtubeLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-green-300 hover:bg-green-400 text-black py-2 px-4 rounded mt-auto"

@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "Chapter 1: Introduction to Java",
+        "syllabus": "Basics of Java, variables, data types, and operators.",
+        "youtubeLink": "https://www.youtube.com/watch?v=grEKMHGYyns",
+        "pdfLink": "https://docs.google.com/presentation/d/1uFIF5E47RkRqyMOyqJtVERlUiLnymHCg/edit?usp=drivesdk&ouid=115842406990073587545&rtpof=true&sd=true"
+    },
+    {
+        "id": 2,
+        "name": "Chapter 2: Control Structures",
+        "syllabus": "If-else, switch-case, loops, and break/continue statements.",
+        "youtubeLink": "https://www.youtube.com/watch?v=zozWEtruwKE",
+        "pdfLink": "https://example.com/chapter2.pdf"
+    },
+    {
+        "id": 3,
+        "name": "Chapter 3: Object-Oriented Programming",
+        "syllabus": "Classes, objects, methods, constructors, and inheritance.",
+        "youtubeLink": "https://www.youtube.com/watch?v=piMjCHFxEjA",
+        "pdfLink": "https://example.com/chapter3.pdf"
+    },
+    {
+        "id": 4,
+        "name": "Chapter 4: Exception Handling",
+        "syllabus": "Try-catch blocks, finally, and custom exceptions.",
+        "youtubeLink": "https://www.youtube.com/watch?v=wVdyKBYu1E8",
+        "pdfLink": "https://example.com/chapter4.pdf"
+    },
+    {
+        "id": 5,
+        "name": "Chapter 5: Collections Framework",
+        "syllabus": "ArrayList, LinkedList, HashMap, and HashSet.",
+        "youtubeLink": "https://www.youtube.com/watch?v=RXEyLdp0xho",
+        "pdfLink": "https://example.com/chapter5.pdf"
+    }
+  ]

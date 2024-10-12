@@ -1,5 +1,6 @@
 import express from 'express';
 import semesterController from '../controllers/semesterController';
+import { authenticate } from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
@@ -10,7 +11,8 @@ router.post('/semesters/:semesterId/subjects/:subjectId/chapters/:chapterId/reso
 
 
 
-router.get('/semesters', semesterController.getAllSemesters);
+router.get('/semesters', authenticate, semesterController.getAllSemesters);
 router.get('/semesters/:semesterId/subjects', semesterController.getSubjectsBySemester.bind(semesterController));
+router.get("/semesters/")
 
 export default router;

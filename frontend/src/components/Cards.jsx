@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
-function Cards({ item }) {
+function Cards({ item , navi}) {
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleCardClick = () => {
-    navigate('/access'); // Navigate to the Access component
+    navigate(`/syllabus`); // Navigate to the Access component
   };
 
   return (

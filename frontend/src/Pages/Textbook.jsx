@@ -40,8 +40,10 @@ const Textbook = () => {
             >
               <h2 className="text-xl font-semibold mb-2">{textbook.title}</h2>
               <p className="mb-4 flex-grow">{textbook.description}</p>
+             
               <a
-                href={textbook.downloadLink}
+
+                href="https://drive.google.com/file/d/1tnofXBKoQiFoNx6HL5smmyxrWeLQ8QqU/view?usp=drivesdk"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-green-300 hover:bg-green-400 text-black py-2 px-4 rounded mt-auto"

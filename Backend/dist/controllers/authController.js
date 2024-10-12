@@ -27,7 +27,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 return; // Early return to prevent further execution
             }
             const semesterr = yield semester_1.default.findOne({ semesterName });
-            if (!semester_1.default) {
+            if (!semesterr) {
                 res.status(400).json({ message: "Semester not found" });
                 return; // Early return
             }
@@ -59,7 +59,8 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { token } = yield (0, authService_1.loginUser)(email, password);
         res.cookie('token', token, {
             httpOnly: true, // Prevents JavaScript access
-            secure: process.env.NODE_ENV === 'production', // Cookie is only sent over HTTPS in production
+            secure: false,
+            /* sameSite: 'None'   */ // Cookie is only sent over HTTPS in production
             // sameSite: 'Strict', // Helps prevent CSRF attacks
         });
         res.status(200).json({ message: 'Login successful', token }); // Optionally send a success message

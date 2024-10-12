@@ -11,18 +11,20 @@ import cors from 'cors';
 const app = express();
 
 
-app.use(cors());
-app.use(cookieParser());
+app.use(cors({
+  origin: 'http://localhost:5173', // Your frontend URL
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+})); app.use(cookieParser());
 app.use(express.json());
 
 mongoose.connect('mongodb+srv://shivpratikhande2017:KWAj0BaKnkHOio9s@cluster0.ggko1.mongodb.net/')
-.then(() => console.log('Connected successfully to MongoDB'))
-.catch(err => console.error("failed to connect", err))
+  .then(() => console.log('Connected successfully to MongoDB'))
+  .catch(err => console.error("failed to connect", err))
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-app.use("/admin",adminRoutes)
-app.use("/api",semesterRoutes)
+app.use("/admin", adminRoutes)
+app.use("/api", semesterRoutes)
 
 
 app.listen(3000, () => {
