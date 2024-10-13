@@ -121,5 +121,24 @@ class SemesterController {
             }
         });
     }
+    getChaptersById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { subjectId } = req.params;
+            console.log(subjectId);
+            try {
+                const chapters = yield semesterServices_1.default.getChaptersBySubjectId(subjectId);
+                console.log(chapters);
+                res.json(chapters);
+            }
+            catch (error) {
+                if (error instanceof Error) {
+                    res.status(500).json({ error: error.message });
+                }
+                else {
+                    res.status(500).json({ error: 'An unexpected error occurred.' });
+                }
+            }
+        });
+    }
 }
 exports.default = new SemesterController();

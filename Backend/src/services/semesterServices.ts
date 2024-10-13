@@ -80,12 +80,22 @@ class SemesterService {
         }
         return semester.subjects; // Return the populated subjects
     }
+    
+    async getChaptersBySubjectId(subjectId: string): Promise<IChapter[]> {
+        const semester = await Semester.findOne({ 'subjects.subjectId': subjectId });
+        if (!semester) throw new Error('Semester not found');
+    
+        const subject = semester.subjects.find((s: ISubject) => s.subjectId.equals(subjectId));
+        if (!subject) throw new Error('Subject not found');
+    
+        return subject.chapters; // Return the chapters directly
+    }
+    
 
 
     async addChapter(semesterId: string, subjectId: string, chapterName: string): Promise<IChapter> {
         const semester = await Semester.findById(semesterId);
         if (!semester) throw new Error(`Semester with ID ${semesterId} not found`);
-        console.log(semester)
     
         const subject = semester.subjects.find((s: ISubject) => s.subjectId.toString() === subjectId);
         if (!subject) throw new Error(`Subject with ID ${subjectId} not found`);

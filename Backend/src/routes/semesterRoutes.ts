@@ -11,8 +11,8 @@ router.post('/semesters/:semesterId/subjects/:subjectId/chapters/:chapterId/reso
 
 
 
-router.get('/semesters', authenticate, semesterController.getAllSemesters);
+router.get('/semesters', semesterController.getAllSemesters);
 router.get('/semesters/:semesterId/subjects', semesterController.getSubjectsBySemester.bind(semesterController));
-router.get("/semesters/")
+router.get("/semesters/:semesterId/subjects/:subjectId/chapters", semesterController.getChaptersById)
 
 export default router;

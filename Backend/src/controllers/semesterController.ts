@@ -33,7 +33,7 @@ class SemesterController {
 
     async addchapter(req: Request, res: Response) {
         const { semesterId, subjectId } = req.params;
-        const { chapterName } = req.body; 
+        const { chapterName } = req.body;
 
         try {
             const subject = await semesterService.addChapter(semesterId, subjectId, chapterName);
@@ -86,6 +86,21 @@ class SemesterController {
         try {
             const subjects = await semesterService.getSubjectsBySemester(semesterId);
             res.json(subjects);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                res.status(500).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'An unexpected error occurred.' });
+            }
+        }
+    }
+    async getChaptersById(req: Request, res: Response) {
+        const { subjectId } = req.params;
+        console.log(subjectId)
+        try {
+            const chapters = await semesterService.getChaptersBySubjectId(subjectId);
+            console.log(chapters)
+            res.json(chapters);
         } catch (error: unknown) {
             if (error instanceof Error) {
                 res.status(500).json({ error: error.message });

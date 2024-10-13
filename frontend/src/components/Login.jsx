@@ -46,10 +46,12 @@ function Login() {
         password: formData.password,
         role: formData.role.toLowerCase(),
         semester: formData.role === "Student" ? formData.semester : undefined,
-      }, { withCredentials: true }); 
+      }, { withCredentials: true });
       console.log("Login successful:", response.data);
-      navigate("/resources"); // Redirect after successful login
-    } catch (error) {
+      formData.role === "Admin" ? navigate("/admin") : navigate("/resources")
+
+/*       navigate("/resources"); // Redirect after successful login
+ */    } catch (error) {
       const errorMessage =
         error.response?.data?.message || "Login failed. Please try again.";
       setError(errorMessage);
@@ -77,15 +79,14 @@ function Login() {
               {/* Role Toggle Button */}
               <div className="flex justify-center mb-4">
                 <button
-                  className={`btn ${
-                    formData.role === "Admin" ? "bg-gray-300" : "bg-gray-300" 
-                  } text-black rounded-full w-1/2 hover:bg-green-300`}
+                  className={`btn ${formData.role === "Admin" ? "bg-gray-300" : "bg-gray-300"
+                    } text-black rounded-full w-1/2 hover:bg-green-300`}
                   onClick={toggleRole}
                 >
                   {formData.role}
                 </button>
               </div>
- 
+
               <label className="form-control w-full">
                 <InputField
                   type="email"

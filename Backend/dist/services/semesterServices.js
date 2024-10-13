@@ -86,12 +86,22 @@ class SemesterService {
             return semester.subjects; // Return the populated subjects
         });
     }
+    getChaptersBySubjectId(subjectId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const semester = yield semester_1.default.findOne({ 'subjects.subjectId': subjectId });
+            if (!semester)
+                throw new Error('Semester not found');
+            const subject = semester.subjects.find((s) => s.subjectId.equals(subjectId));
+            if (!subject)
+                throw new Error('Subject not found');
+            return subject.chapters; // Return the chapters directly
+        });
+    }
     addChapter(semesterId, subjectId, chapterName) {
         return __awaiter(this, void 0, void 0, function* () {
             const semester = yield semester_1.default.findById(semesterId);
             if (!semester)
                 throw new Error(`Semester with ID ${semesterId} not found`);
-            console.log(semester);
             const subject = semester.subjects.find((s) => s.subjectId.toString() === subjectId);
             if (!subject)
                 throw new Error(`Subject with ID ${subjectId} not found`);
