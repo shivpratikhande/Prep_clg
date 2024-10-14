@@ -74,7 +74,7 @@ const Notes = () => {
   );
 
   return (
-    <div className="flex space-x-3 min-h-screen">
+    <div className="flex space-x-3 min-h-screen ">
       {/* Sidebar */}
       <Slidebar />
 

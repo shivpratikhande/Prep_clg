@@ -103,11 +103,11 @@ function Resources() {
           <select
             onChange={handleSemesterChange}
             value={selectedSemesterId || ""}
-            className="mt-2 p-2 border rounded"
+            className="mt-2 p-2 rounded-lg bg-green-400 border-black border-2"
           >
-            <option value="">Select a semester</option>
+            <option value="" className=" bg-white">Select a semester</option>
             {semesters.map((semester) => (
-              <option key={semester._id} value={semester._id}>
+              <option key={semester._id} value={semester._id} className=" bg-white rounded-lg">
                 {semester.semesterName} ({semester.year})
               </option>
             ))}
@@ -129,7 +129,7 @@ function Resources() {
                 lisst.map((e) => {
                   <>
                     <h1> {e.name}</h1>
-                    <video src={e.youtubeLink}></video>
+                    <iframe src={e.youtubeLink} frameborder="0"></iframe>
                   </>
 
 
