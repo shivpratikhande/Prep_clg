@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function Cards({ item, navi }) {
   const navigate = useNavigate(); // Initialize useNavigate
 
+  const handleSemesterChange = (e) => {
+
+  };
+
+
+
+
   const handleCardClick = () => {
-    navigate(navi); // Use navi for dynamic navigation
+    navigate(`${navi}/syllabus`)
+    localStorage.setItem("subjectId", navi)
+    console.log(navi)
   };
 
   return (
     <div className="my-3 p-3">
-      <div 
-        className="card w-full sm:w-64 md:w-72 shadow-xl hover:scale-105 duration-300 transform mx-auto dark:bg-gray-700 mb-6 transition-shadow hover:shadow-green-300 cursor-pointer" 
+      <div
+        className="card w-full sm:w-64 md:w-72 shadow-xl hover:scale-105 duration-300 transform mx-auto dark:bg-gray-700 mb-6 transition-shadow hover:shadow-green-300 cursor-pointer"
         onClick={handleCardClick} // Add onClick event
       >
         <figure>

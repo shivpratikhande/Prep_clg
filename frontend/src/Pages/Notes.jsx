@@ -5,40 +5,73 @@ import axios from "axios";
 
 const Notes = () => {
   const [isPdfOpen, setIsPdfOpen] = useState(false);
-  const pdfUrl = "https://drive.google.com/file/d/1tnofXBKoQiFoNx6HL5smmyxrWeLQ8QqU/preview";
-
-  const [chapter, setChapter] = useState([]);
+  const [pdfUrl, setPdfUrl] = useState(""); 
+  const [videoUrl, setVideoUrl] = useState(""); // Dynamic PDF URL
+  const [chapters, setChapters] = useState([]); // Chapters data
   const [err, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [semesterId, setSemesterId] = useState("");
+  const [subjectId, setSubjectId] = useState("");
 
-  const openPdf = (event) => {
-    event.preventDefault();
+  const openPdf = (url) => {
+    setPdfUrl(url); // Set dynamic PDF URL
     setIsPdfOpen(true); // Open PDF viewer
+    setVideoUrl(url)
   };
 
   const closePdf = () => {
     setIsPdfOpen(false); // Close PDF viewer
+    setPdfUrl(""); // Reset PDF URL
   };
 
   useEffect(() => {
+    const value = localStorage.getItem('selectedSemesterId');
+    const sub = localStorage.getItem("subjectId");
+    if (value) {
+      setSemesterId(value);
+    }
+    if (sub) {
+      setSubjectId(sub);
+    }
+  }, []);
+
+  useEffect(() => {
     const fetchSemesters = async () => {
-      setLoading(true); // Start loading
+      if (!semesterId || !subjectId) return; // Avoid fetching if IDs are not available
+      setLoading(true);
       try {
-        const response = await axios.get('http://localhost:3000/api/semesters/670729f6f042ac4ef2f3a8df/subjects/67072a3ef042ac4ef2f3a8eb/chapters');
-        
-        // Assuming response.data contains the chapters
-        setChapter(response.data);
+        const response = await axios.get(`http://localhost:3000/api/semesters/${semesterId}/subjects/${subjectId}/chapters`, {
+          withCredentials: true
+        });
+
+        setChapters(response.data); // Set chapters directly from response
       } catch (err) {
         setError(err.message);
       } finally {
-        setLoading(false); // End loading
+        setLoading(false);
       }
     };
 
     fetchSemesters();
-  }, []);
+  }, [semesterId, subjectId]);
 
-  console.log(chapter)
+  // Separate PDFs and videos
+  const pdfResources = chapters.flatMap(chapter =>
+    chapter.resources.filter(resource => resource.resourceType === "pdf").map(resource => ({
+      title: chapter.chapterName,
+      resourceId: resource.resourceId,
+      resourceUrl: resource.resourceUrl,
+    }))
+  );
+
+  const videoResources = chapters.flatMap(chapter =>
+    chapter.resources.filter(resource => resource.resourceType === "video").map(resource => ({
+      title: chapter.chapterName, // Get chapter name for video title
+      resourceId: resource.resourceId,
+      resourceUrl: resource.resourceUrl, // Assuming resourceUrl for video
+      // Include other video-specific properties as needed
+    }))
+  );
 
   return (
     <div className="flex space-x-3 min-h-screen">
@@ -53,13 +86,22 @@ const Notes = () => {
         {loading && <p>Loading chapters...</p>}
         {err && <p className="text-red-500">{err}</p>}
 
+        {/* PDF Resources */}
+        <h2 className="text-2xl font-semibold mb-4">PDF Resources</h2>
+        {pdfResources.length === 0 && !loading && <p>No PDF resources available.</p>}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-black">
-          {chapter.map((note) => (
-            <div key={note.id} className="bg-white shadow-xl rounded-lg p-4 flex flex-col">
-              <h2 className="text-xl font-semibold mb-2">{note.name}</h2>
-              <p className="mb-4 flex-grow">{note.description}</p>
+          {pdfResources.map(resource => (
+            <div key={resource.resourceId} className="bg-white shadow-xl rounded-lg p-4 flex flex-col">
+              <h3 className="text-xl font-semibold mb-2">{resource.title}</h3>
+              <iframe
+                src={resource.resourceUrl}
+                title="PDF Viewer"
+                width="100%"
+                height="300"
+                className="border-0"
+              ></iframe>
               <button
-                onClick={openPdf}
+                onClick={() => openPdf(resource.resourceUrl)} // Use resource.resourceUrl
                 className="inline-block bg-green-300 hover:bg-green-400 text-black py-2 px-4 rounded mt-auto"
               >
                 Open PDF
@@ -68,11 +110,10 @@ const Notes = () => {
           ))}
         </div>
 
-        {/* PDF Viewer Modal */}
         {isPdfOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="relative bg-white rounded-lg shadow-lg p-4">
-              <button onClick={closePdf} className="absolute top-0 right-0 p-2 px-3 hover:bg-red-700 bg-red-600 rounded-md text-white border shadow-lg blur-1 font-bold border-black">
+              <button onClick={closePdf} className="absolute top-0 right-0 p-2 px-3 hover:bg-red-700 bg-red-600 rounded-md text-white border shadow-lg font-bold border-black">
                 X
               </button>
               <iframe
@@ -87,13 +128,14 @@ const Notes = () => {
         )}
 
         {/* Videos Section */}
-        <h1 className="text-3xl font-bold mt-10 mb-6">Videos</h1>
+        <h2 className="text-2xl font-semibold mt-10 mb-4">Video Resources</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-black">
-          {lisst.map((video) => (
-            <div key={video.id} className="bg-white shadow-xl rounded-lg p-4 flex flex-col">
-              <h2 className="text-xl font-semibold mb-2">{video.name}</h2>
+          {videoResources.length === 0 && <p>No video resources available.</p>}
+          {videoResources.map(video => (
+            <div key={video.resourceId} className="bg-white shadow-xl rounded-lg p-4 flex flex-col">
+              <h3 className="text-xl font-semibold mb-2">{video.title}</h3>
               <a
-                href={video.youtubeLink}
+                href={video.resourceUrl} // Use resourceUrl for video
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-green-300 hover:bg-green-400 text-black py-2 px-4 rounded mt-auto"
@@ -103,6 +145,22 @@ const Notes = () => {
             </div>
           ))}
         </div>
+        {isPdfOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="relative bg-white rounded-lg shadow-lg p-4">
+              <button onClick={closePdf} className="absolute top-0 right-0 p-2 px-3 hover:bg-red-700 bg-red-600 rounded-md text-white border shadow-lg font-bold border-black">
+                X
+              </button>
+              <iframe
+                src={videoUrl}
+                title="PDF Viewer"
+                width="1000"
+                height="600"
+                className="border-0"
+              ></iframe>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
