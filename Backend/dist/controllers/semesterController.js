@@ -33,9 +33,9 @@ class SemesterController {
     addSubject(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { semesterId } = req.params;
-            const { subjectName } = req.body;
+            const { subjectName, questionPaper } = req.body;
             try {
-                const subject = yield semesterServices_1.default.addSubject(semesterId, subjectName);
+                const subject = yield semesterServices_1.default.addSubject(semesterId, subjectName, questionPaper);
                 res.status(201).json(subject);
             }
             catch (error) {
@@ -88,6 +88,26 @@ class SemesterController {
             }
         });
     }
+    /* async addQuestionPaper(req: Request, res: Response) {
+        const { semesterId } = req.params;
+        const{ subjectId, resourceUrl} = req.params
+        console.log(semesterId)
+        
+        try {
+            console.log("in")
+            const resource = await semesterService.addQuestionPaper(semesterId,subjectId, resourceUrl);
+            console.log("sown")
+
+            res.status(201).json(resource);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                res.status(400).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'An unexpected error occurred.' });
+            }
+        }
+    } */
+    //get
     getAllSemesters(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

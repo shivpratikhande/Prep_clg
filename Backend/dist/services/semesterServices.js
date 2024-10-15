@@ -21,7 +21,7 @@ class SemesterService {
             return yield semester.save();
         });
     }
-    addSubject(semesterId, subjectName) {
+    addSubject(semesterId, subjectName, questionPaper) {
         return __awaiter(this, void 0, void 0, function* () {
             const semester = yield semester_1.default.findById(semesterId);
             if (!semester)
@@ -29,6 +29,7 @@ class SemesterService {
             const subject = {
                 subjectId: new mongoose_1.default.Types.ObjectId(),
                 subjectName,
+                questionPaper,
                 chapters: [],
             };
             semester.subjects.push(subject);
@@ -69,6 +70,29 @@ class SemesterService {
             chapter.resources.push(resource);
             yield semester.save();
             return resource;
+        });
+    }
+    addQuestionPaper(semesterId, subjectId, resourceUrl // Now directly takes resourceUrl
+    ) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const semester = yield semester_1.default.findById(semesterId);
+            if (!semester)
+                throw new Error('Semester not found');
+            const subject = semester.subjects.find((s) => s.subjectId.equals(subjectId));
+            if (!subject)
+                throw new Error('Subject not found');
+            // Ensure we set the question paper URL
+            subject.questionPaper = resourceUrl; // Directly set the resource URL
+            yield semester.save();
+            const resource = {
+                resourceId: new mongoose_1.default.Types.ObjectId(),
+                resourceType: 'pdf', // Assuming question papers are always PDFs
+                resourceUrl,
+                createdAt: new Date(),
+            };
+            // You may want to also track this resource if needed in the future.
+            // For now, we just save the URL in the subject.
+            return resource; // Return the resource if you need it for further processing.
         });
     }
     getAllSemesters() {

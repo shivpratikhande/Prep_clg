@@ -7,13 +7,14 @@ class SemesterService {
         return await semester.save();
     }
 
-    async addSubject(semesterId: string, subjectName: string): Promise<ISubject> {
+    async addSubject(semesterId: string, subjectName: string, questionPaper:string): Promise<ISubject> {
         const semester = await Semester.findById(semesterId);
         if (!semester) throw new Error('Semester not found');
 
         const subject: ISubject = {
             subjectId: new mongoose.Types.ObjectId(),
             subjectName,
+            questionPaper,
             chapters: [],
         };
 
@@ -65,6 +66,36 @@ class SemesterService {
     
         return resource;
     }
+
+    async addQuestionPaper(
+        semesterId: string,
+        subjectId: string,
+        resourceUrl: string // Now directly takes resourceUrl
+    ): Promise<IResource> {
+        const semester = await Semester.findById(semesterId);
+        if (!semester) throw new Error('Semester not found');
+    
+        const subject = semester.subjects.find((s: ISubject) => s.subjectId.equals(subjectId));
+        if (!subject) throw new Error('Subject not found');
+    
+        // Ensure we set the question paper URL
+        subject.questionPaper = resourceUrl; // Directly set the resource URL
+    
+        await semester.save();
+    
+        const resource: IResource = {
+            resourceId: new mongoose.Types.ObjectId(),
+            resourceType: 'pdf', // Assuming question papers are always PDFs
+            resourceUrl,
+            createdAt: new Date(),
+        };
+    
+        // You may want to also track this resource if needed in the future.
+        // For now, we just save the URL in the subject.
+    
+        return resource; // Return the resource if you need it for further processing.
+    }
+    
     
 
 

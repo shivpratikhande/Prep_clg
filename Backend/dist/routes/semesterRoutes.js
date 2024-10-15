@@ -10,7 +10,10 @@ router.post('/semesters', semesterController_1.default.createSemester);
 router.post('/semesters/:semesterId/subjects', semesterController_1.default.addSubject);
 router.post('/semesters/:semesterId/subjects/:subjectId/chapters', semesterController_1.default.addchapter);
 router.post('/semesters/:semesterId/subjects/:subjectId/chapters/:chapterId/resources', semesterController_1.default.addResource);
+/* router.post('/semesters/:semesterId/subjects/questionPaper', semesterController.addQuestionPaper);
+ */
 router.get('/semesters', semesterController_1.default.getAllSemesters);
 router.get('/semesters/:semesterId/subjects', semesterController_1.default.getSubjectsBySemester.bind(semesterController_1.default));
 router.get("/semesters/:semesterId/subjects/:subjectId/chapters", semesterController_1.default.getChaptersById);
+router.get('/semesters/:semesterId/questionPaper', semesterController_1.default.getSubjectsBySemester.bind(semesterController_1.default));
 exports.default = router;

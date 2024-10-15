@@ -62,7 +62,8 @@ const ChapterSchema = new mongoose_1.Schema({
 //
 const SubjectSchema = new mongoose_1.Schema({
     subjectId: { type: mongoose_1.default.Schema.Types.ObjectId, required: true },
-    subjectName: { type: String, required: true },
+    subjectName: { type: String, required: true, unique: true },
+    questionPaper: { type: String },
     chapters: [ChapterSchema],
 });
 // Update SemesterSchema to include enum validation

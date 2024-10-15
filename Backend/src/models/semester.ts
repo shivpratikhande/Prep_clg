@@ -37,6 +37,7 @@ export interface IChapter {
 export interface ISubject {
     subjectId: mongoose.Types.ObjectId;
     subjectName: string;
+    questionPaper:string
     chapters: IChapter[];
 }
 
@@ -69,7 +70,8 @@ const ChapterSchema  = new Schema<IChapter>({
 
 const SubjectSchema = new Schema<ISubject>({
     subjectId: { type: mongoose.Schema.Types.ObjectId, required: true },
-    subjectName: { type: String, required: true },
+    subjectName: { type: String, required: true, unique:true },
+    questionPaper:{type:String},
     chapters: [ChapterSchema],
 });
 
