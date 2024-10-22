@@ -21,7 +21,7 @@ class SemesterService {
             return yield semester.save();
         });
     }
-    addSubject(semesterId, subjectName) {
+    addSubject(semesterId, subjectName, questionPaper) {
         return __awaiter(this, void 0, void 0, function* () {
             const semester = yield semester_1.default.findById(semesterId);
             if (!semester)
@@ -29,14 +29,51 @@ class SemesterService {
             const subject = {
                 subjectId: new mongoose_1.default.Types.ObjectId(),
                 subjectName,
-                resources: [],
+                questionPaper,
+                chapters: [],
             };
             semester.subjects.push(subject);
             yield semester.save();
             return subject;
         });
     }
-    addResource(semesterId, subjectId, resourceData) {
+    addResource(semesterId, subjectId, chapterId, resourceData // Restricting resourceType
+    ) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const semester = yield semester_1.default.findById(semesterId);
+            if (!semester)
+                throw new Error('Semester not found');
+            console.log(semester);
+            const subject = semester.subjects.find((s) => s.subjectId.equals(subjectId));
+            if (!subject)
+                throw new Error('Subject not found');
+            console.log(subject);
+            const chapterIdObj = new mongoose_1.default.Types.ObjectId(chapterId);
+            const chapter = subject.chapters.find((c) => c.chapterId.equals(chapterIdObj));
+            if (!chapter) {
+                console.log('Chapter ID passed:', chapterId);
+                console.log('Available Chapters:', subject.chapters.map(c => c.chapterId.toString())); // Log available chapters
+                throw new Error('Chapter not found');
+            }
+            if (!chapter)
+                throw new Error('Chapter not found');
+            // Validate resourceType
+            if (!['pdf', 'video'].includes(resourceData.resourceType)) {
+                throw new Error('Invalid resource type. Allowed types are "pdf" or "video".');
+            }
+            const resource = {
+                resourceId: new mongoose_1.default.Types.ObjectId(),
+                resourceType: resourceData.resourceType,
+                resourceUrl: resourceData.resourceUrl,
+                createdAt: new Date(),
+            };
+            chapter.resources.push(resource);
+            yield semester.save();
+            return resource;
+        });
+    }
+    addQuestionPaper(semesterId, subjectId, resourceUrl // Now directly takes resourceUrl
+    ) {
         return __awaiter(this, void 0, void 0, function* () {
             const semester = yield semester_1.default.findById(semesterId);
             if (!semester)
@@ -44,20 +81,62 @@ class SemesterService {
             const subject = semester.subjects.find((s) => s.subjectId.equals(subjectId));
             if (!subject)
                 throw new Error('Subject not found');
+            // Ensure we set the question paper URL
+            subject.questionPaper = resourceUrl; // Directly set the resource URL
+            yield semester.save();
             const resource = {
                 resourceId: new mongoose_1.default.Types.ObjectId(),
-                resourceType: resourceData.resourceType,
-                resourceUrl: resourceData.resourceUrl,
+                resourceType: 'pdf', // Assuming question papers are always PDFs
+                resourceUrl,
                 createdAt: new Date(),
             };
-            subject.resources.push(resource);
-            yield semester.save();
-            return resource;
+            // You may want to also track this resource if needed in the future.
+            // For now, we just save the URL in the subject.
+            return resource; // Return the resource if you need it for further processing.
         });
     }
     getAllSemesters() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield semester_1.default.find({}, { semesterName: 1, year: 1 });
+        });
+    }
+    getSubjectsBySemester(semesterId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const semester = yield semester_1.default.findById(semesterId)
+                .populate('subjects', 'subjectName'); // Populate subjects
+            if (!semester) {
+                throw new Error('Semester not found');
+            }
+            return semester.subjects; // Return the populated subjects
+        });
+    }
+    getChaptersBySubjectId(subjectId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const semester = yield semester_1.default.findOne({ 'subjects.subjectId': subjectId });
+            if (!semester)
+                throw new Error('Semester not found');
+            const subject = semester.subjects.find((s) => s.subjectId.equals(subjectId));
+            if (!subject)
+                throw new Error('Subject not found');
+            return subject.chapters; // Return the chapters directly
+        });
+    }
+    addChapter(semesterId, subjectId, chapterName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const semester = yield semester_1.default.findById(semesterId);
+            if (!semester)
+                throw new Error(`Semester with ID ${semesterId} not found`);
+            const subject = semester.subjects.find((s) => s.subjectId.toString() === subjectId);
+            if (!subject)
+                throw new Error(`Subject with ID ${subjectId} not found`);
+            const chapter = {
+                chapterId: new mongoose_1.default.Types.ObjectId(),
+                chapterName,
+                resources: [],
+            };
+            subject.chapters.push(chapter);
+            yield semester.save();
+            return chapter;
         });
     }
 }

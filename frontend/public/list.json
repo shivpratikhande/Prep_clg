@@ -2,108 +2,27 @@
   {
     "id": 1,
     "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
     "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
   },
   {
     "id": 2,
     "name": "CNS",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
     "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
   },
   {
     "id": 3,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
+    "name": "IP",
     "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
   },
   {
     "id": 4,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
+    "name": "ADSA",
     "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
   },
   {
     "id": 5,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
-    "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
-  },
-  {
-    "id": 6,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
-    "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
-  },
-  {
-    "id": 7,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
-    "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
-  },
-  {
-    "id": 8,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
-    "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
-  },
-  {
-    "id": 9,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
-    "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
-  },
-  {
-    "id": 10,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
-    "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
-  },
-  {
-    "id": 11,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
-    "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
-  },
-  {
-    "id": 12,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
-    "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
-  },
-  {
-    "id": 13,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
-    "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
-  },
-  {
-    "id": 14,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
-    "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
-  },
-  {
-    "id": 15,
-    "name": "SE",
-    "title": "lorem ipsum dolor sit amet, consectetur adip",
-    "category": "free",
+    "name": "BCE",
     "image": "https://img.freepik.com/free-vector/flat-design-stack-books-illustration_23-2149380226.jpg?t=st=1727025340~exp=1727028940~hmac=5caf325d031c37b7eef3682e66789b77c7972b2c1939809e0640acfb530f2038&w=740"
   }
+
 ]
-
-

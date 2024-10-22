@@ -33,9 +33,27 @@ class SemesterController {
     addSubject(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { semesterId } = req.params;
-            const { subjectName } = req.body;
+            const { subjectName, questionPaper } = req.body;
             try {
-                const subject = yield semesterServices_1.default.addSubject(semesterId, subjectName);
+                const subject = yield semesterServices_1.default.addSubject(semesterId, subjectName, questionPaper);
+                res.status(201).json(subject);
+            }
+            catch (error) {
+                if (error instanceof Error) {
+                    res.status(400).json({ error: error.message });
+                }
+                else {
+                    res.status(500).json({ error: 'An unexpected error occurred.' });
+                }
+            }
+        });
+    }
+    addchapter(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { semesterId, subjectId } = req.params;
+            const { chapterName } = req.body;
+            try {
+                const subject = yield semesterServices_1.default.addChapter(semesterId, subjectId, chapterName);
                 res.status(201).json(subject);
             }
             catch (error) {
@@ -50,10 +68,13 @@ class SemesterController {
     }
     addResource(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { semesterId, subjectId } = req.params;
+            const { semesterId, subjectId, chapterId } = req.params;
+            console.log(chapterId);
+            console.log(semesterId);
+            console.log(subjectId);
             try {
                 console.log("in");
-                const resource = yield semesterServices_1.default.addResource(semesterId, subjectId, req.body);
+                const resource = yield semesterServices_1.default.addResource(semesterId, subjectId, chapterId, req.body);
                 console.log("sown");
                 res.status(201).json(resource);
             }
@@ -67,11 +88,67 @@ class SemesterController {
             }
         });
     }
+    /* async addQuestionPaper(req: Request, res: Response) {
+        const { semesterId } = req.params;
+        const{ subjectId, resourceUrl} = req.params
+        console.log(semesterId)
+        
+        try {
+            console.log("in")
+            const resource = await semesterService.addQuestionPaper(semesterId,subjectId, resourceUrl);
+            console.log("sown")
+
+            res.status(201).json(resource);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                res.status(400).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'An unexpected error occurred.' });
+            }
+        }
+    } */
+    //get
     getAllSemesters(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const semesters = yield semesterServices_1.default.getAllSemesters();
                 res.status(200).json(semesters);
+            }
+            catch (error) {
+                if (error instanceof Error) {
+                    res.status(500).json({ error: error.message });
+                }
+                else {
+                    res.status(500).json({ error: 'An unexpected error occurred.' });
+                }
+            }
+        });
+    }
+    getSubjectsBySemester(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { semesterId } = req.params;
+            try {
+                const subjects = yield semesterServices_1.default.getSubjectsBySemester(semesterId);
+                res.json(subjects);
+            }
+            catch (error) {
+                if (error instanceof Error) {
+                    res.status(500).json({ error: error.message });
+                }
+                else {
+                    res.status(500).json({ error: 'An unexpected error occurred.' });
+                }
+            }
+        });
+    }
+    getChaptersById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { subjectId } = req.params;
+            console.log(subjectId);
+            try {
+                const chapters = yield semesterServices_1.default.getChaptersBySubjectId(subjectId);
+                console.log(chapters);
+                res.json(chapters);
             }
             catch (error) {
                 if (error instanceof Error) {

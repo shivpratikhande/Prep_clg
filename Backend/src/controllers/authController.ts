@@ -20,7 +20,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       }
 
       const semesterr = await semester.findOne({ semesterName });
-      if (!semester) {
+      if (!semesterr) {
         res.status(400).json({ message: "Semester not found" });
         return; // Early return
       }
@@ -50,16 +50,17 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     res.cookie('token', token, {
       httpOnly: true,  // Prevents JavaScript access
-      secure: true,    // Cookie is only sent over HTTPS
-/*       sameSite: 'Strict' // Helps prevent CSRF attacks
- */    });
+      secure: false,
+      /* sameSite: 'None'   */ // Cookie is only sent over HTTPS in production
+     // sameSite: 'Strict', // Helps prevent CSRF attacks
+    });
 
-    res.json({ token });
+    res.status(200).json({ message: 'Login successful', token }); // Optionally send a success message
   } catch (error) {
     if (error instanceof Error) {
-      res.status(401).json({ message: error.message });
+      res.status(401).json({ message: error.message }); // Invalid credentials
     } else {
-      res.status(401).json({ message: 'An unknown error occurred' });
+      res.status(500).json({ message: 'An unknown error occurred' }); // Server error
     }
   }
 };

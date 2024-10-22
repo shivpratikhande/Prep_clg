@@ -17,10 +17,26 @@ class SemesterController {
 
     async addSubject(req: Request, res: Response) {
         const { semesterId } = req.params;
-        const { subjectName } = req.body;
+        const { subjectName, questionPaper } = req.body;
 
         try {
-            const subject = await semesterService.addSubject(semesterId, subjectName);
+            const subject = await semesterService.addSubject(semesterId, subjectName, questionPaper);
+            res.status(201).json(subject);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                res.status(400).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'An unexpected error occurred.' });
+            }
+        }
+    }
+
+    async addchapter(req: Request, res: Response) {
+        const { semesterId, subjectId } = req.params;
+        const { chapterName } = req.body;
+
+        try {
+            const subject = await semesterService.addChapter(semesterId, subjectId, chapterName);
             res.status(201).json(subject);
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -32,11 +48,15 @@ class SemesterController {
     }
 
     async addResource(req: Request, res: Response) {
-        const { semesterId, subjectId } = req.params;
+        const { semesterId, subjectId, chapterId } = req.params;
+        console.log(chapterId)
+        console.log(semesterId)
+        console.log(subjectId)
+
 
         try {
             console.log("in")
-            const resource = await semesterService.addResource(semesterId, subjectId, req.body);
+            const resource = await semesterService.addResource(semesterId, subjectId, chapterId, req.body);
             console.log("sown")
 
             res.status(201).json(resource);
@@ -48,6 +68,51 @@ class SemesterController {
             }
         }
     }
+
+    /* async addQuestionPaper(req: Request, res: Response) {
+        const { semesterId } = req.params;
+        const{ subjectId, resourceUrl} = req.params
+        console.log(semesterId)
+        
+        try {
+            console.log("in")
+            const resource = await semesterService.addQuestionPaper(semesterId,subjectId, resourceUrl);
+            console.log("sown")
+
+            res.status(201).json(resource);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                res.status(400).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'An unexpected error occurred.' });
+            }
+        }
+    } */
+    //
+   /*  async addQuestionPaperToSubject(subjectId, questionPaper) => {
+        try {
+            const subject = await Subject.findOne({ subjectId });
+
+            if (!subject) {
+                throw new Error('Subject not found');
+            }
+
+            subject.questionPaper = questionPaper; // Update question paper
+            await subject.save(); // Save the changes
+
+            console.log('Question paper added successfully');
+        } catch (error) {
+            console.error('Error adding question paper:', error.message);
+        }
+    }; */
+
+    
+
+    //
+
+    //get
+
+
 
     async getAllSemesters(req: Request, res: Response) {
         try {
@@ -61,6 +126,35 @@ class SemesterController {
             }
         }
     }
+    async getSubjectsBySemester(req: Request, res: Response) {
+        const { semesterId } = req.params;
+        try {
+            const subjects = await semesterService.getSubjectsBySemester(semesterId);
+            res.json(subjects);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                res.status(500).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'An unexpected error occurred.' });
+            }
+        }
+    }
+    async getChaptersById(req: Request, res: Response) {
+        const { subjectId } = req.params;
+        console.log(subjectId)
+        try {
+            const chapters = await semesterService.getChaptersBySubjectId(subjectId);
+            console.log(chapters)
+            res.json(chapters);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                res.status(500).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'An unexpected error occurred.' });
+            }
+        }
+    }
+
 }
 
 export default new SemesterController();

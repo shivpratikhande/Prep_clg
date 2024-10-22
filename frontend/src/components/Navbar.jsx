@@ -48,12 +48,7 @@ useEffect(() => {
         </a>
       </li>
       <li>
-        <a href="#videos" className="block px-4 py-2 hover:bg-green-300 dark:hover:text-black">
-          Videos
-        </a>
-      </li>
-      <li>
-        <a href="#about" className="block px-4 py-2 hover:bg-green-300 dark:hover:text-black">
+        <a href="/about" className="block px-4 py-2 hover:bg-green-300 dark:hover:text-black">
           About
         </a>
       </li>

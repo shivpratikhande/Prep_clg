@@ -5,13 +5,9 @@ import Footer from "../components/Footer.jsx";
 
 function home() {
   return (
-    <div>
-      <>
-      <Navbar/>
+    <>
       <Banner/>
-      <Footer/>
     </>
-    </div>
   )
 }
 
