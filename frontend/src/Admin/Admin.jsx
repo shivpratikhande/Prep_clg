@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { url } from '../host';
+
+
+console.log(url)
 
 const AdminDashboard = () => {
   const [semesters, setSemesters] = useState([]);
@@ -11,7 +14,7 @@ const AdminDashboard = () => {
   // Fetch semesters
   const fetchSemesters = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/semesters', {
+      const response = await axios.get(`${url}/api/semesters`, {
         credentials: 'include',
       });
       const data = Array.isArray(response.data) ? response.data : [];
@@ -30,7 +33,7 @@ const AdminDashboard = () => {
   const handleAddSemester = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/semesters', { name: semesterName, year: 2024 });
+      const response = await axios.post(`${url}/api/semesters`, { name: semesterName, year: 2024 });
       setSemesters([...semesters, response.data]);
       setSemesterName('');
     } catch (error) {
@@ -41,7 +44,7 @@ const AdminDashboard = () => {
   // Add subject
   const handleAddSubject = async (semesterId) => {
     try {
-      const response = await axios.post(`http://localhost:3000/api/semesters/${semesterId}/subjects`, { name: subjectName });
+      const response = await axios.post(`${url}/api/semesters/${semesterId}/subjects`, { name: subjectName });
       const updatedSemesters = semesters.map((semester) =>
         semester._id === semesterId ? { ...semester, subjects: [...(semester.subjects || []), response.data] } : semester
       );
@@ -55,7 +58,7 @@ const AdminDashboard = () => {
   // Add chapter
   const handleAddChapter = async (semesterId, subjectId) => {
     try {
-      const response = await axios.post(`/api/semesters/${semesterId}/subjects/${subjectId}/chapters`, { name: chapterName });
+      const response = await axios.post(`${url}/api/semesters/${semesterId}/subjects/${subjectId}/chapters`, { name: chapterName });
       const updatedSemesters = semesters.map((semester) =>
         semester._id === semesterId ? {
           ...semester,
@@ -74,7 +77,7 @@ const AdminDashboard = () => {
   // Add resource
   const handleAddResource = async (semesterId, subjectId, chapterId) => {
     try {
-      const response = await axios.post(`/api/semesters/${semesterId}/subjects/${subjectId}/chapters/${chapterId}/resources`, resourceData);
+      const response = await axios.post(`${url}/api/semesters/${semesterId}/subjects/${subjectId}/chapters/${chapterId}/resources`, resourceData);
       setResourceData({});
     } catch (error) {
       console.error('Error adding resource:', error);

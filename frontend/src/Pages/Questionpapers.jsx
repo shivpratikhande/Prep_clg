@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Slidebar from "../components/Slidebar";
 import axios from "axios";
+import { url } from "../host";
 
 const Questionpapers = () => {
   const [semesterId, setSemesterId] = useState("");
@@ -20,7 +21,7 @@ const Questionpapers = () => {
       if (!semesterId) return; // Ensure semesterId is present
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/api/semesters/${semesterId}/subjects`, {
+        const response = await axios.get(`${url}/api/semesters/${semesterId}/subjects`, {
           withCredentials: true
         });
         setQuestions(response.data);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Cards from "./Cards.jsx";
 import lisst from "../../public/lisst.json"
 import axios from "axios";
+import { url } from "../host.js";
 
 function Resources() {
   const [semesters, setSemesters] = useState([]);
@@ -15,7 +16,7 @@ function Resources() {
   // Fetch semesters on mount
   const fetchSemesters = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/semesters', {
+      const response = await axios.get(`${url}/api/semesters`, {
         withCredentials: true, // Use withCredentials instead of credentials
       });
       console.log(response);
@@ -41,7 +42,7 @@ function Resources() {
       setErrorSubjects(null);
   
       try {
-        const response = await axios.get(`http://localhost:3000/api/semesters/${selectedSemesterId}/subjects`, {
+        const response = await axios.get(`${url}/api/semesters/${selectedSemesterId}/subjects`, {
           withCredentials: true, // Include credentials (cookies)
         });
         setSubjects(response.data); 

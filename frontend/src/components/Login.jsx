@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { url } from "../host";
 
 const InputField = ({ type, placeholder, name, value, onChange }) => (
   <input
@@ -41,7 +42,7 @@ function Login() {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
+      const response = await axios.post(`${url}/auth/login`, {
         email: formData.email,
         password: formData.password,
         role: formData.role.toLowerCase(),

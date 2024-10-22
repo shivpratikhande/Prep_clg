@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { url } from "../host";
 
 function Register() {
   const navigate = useNavigate(); // Initialize navigate
@@ -28,7 +29,7 @@ function Register() {
   const handleRegister = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:3000/auth/register", {
+      const response = await axios.post(`${url}/auth/register`, {
         fullName: formData.fullName,
         email: formData.email,
         password: formData.password,

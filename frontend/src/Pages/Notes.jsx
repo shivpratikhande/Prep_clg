@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Slidebar from "../components/Slidebar";
 import lisst from "../../public/lisst.json";
 import axios from "axios";
+import { url } from "../host";
 
 const Notes = () => {
   const [isPdfOpen, setIsPdfOpen] = useState(false);
@@ -50,7 +51,7 @@ const Notes = () => {
       if (!semesterId || !subjectId) return;
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/api/semesters/${semesterId}/subjects/${subjectId}/chapters`, {
+        const response = await axios.get(`${url}/api/semesters/${semesterId}/subjects/${subjectId}/chapters`, {
           withCredentials: true
         });
         setChapters(response.data);
