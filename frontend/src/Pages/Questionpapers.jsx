@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Slidebar from "../components/Slidebar";
-import axios from "axios";
-import { url } from "../host";
+import qpData from '../../public/QP.json'; // Adjust the path if needed
 
 const Questionpapers = () => {
   const [semesterId, setSemesterId] = useState("");
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState(qpData.questionPapers || []); // Load questions from JSON
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Set loading to false since we're not fetching from an API
 
   useEffect(() => {
     const value = localStorage.getItem('selectedSemesterId');
@@ -15,25 +14,6 @@ const Questionpapers = () => {
       setSemesterId(value);
     }
   }, []);
-
-  useEffect(() => {
-    const fetchSemesters = async () => {
-      if (!semesterId) return; // Ensure semesterId is present
-      setLoading(true);
-      try {
-        const response = await axios.get(`${url}/api/semesters/${semesterId}/subjects`, {
-          withCredentials: true
-        });
-        setQuestions(response.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSemesters();
-  }, [semesterId]);
 
   return (
     <div className="flex space-x-2 min-h-screen">
@@ -50,13 +30,12 @@ const Questionpapers = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 text-black gap-6">
           {questions.map((paper) => (
             <div
-              key={paper.subjectName}
+              key={paper.title} // Using title as key
               className="bg-white shadow-xl shadow-green-300 rounded-lg p-4 flex flex-col"
             >
-              <h2 className="text-xl font-semibold mb-2">{paper.subjectName}</h2>
-              <p className="mb-4 flex-grow">{paper.description}</p>
+              <h2 className="text-xl font-semibold mb-2">{paper.title}</h2>
               <a
-                href={paper.questionPaper} // Ensure this is the correct property
+                href={paper.pdfUrl} // Ensure this is the correct property
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-green-300 hover:bg-green-400 text-black py-2 px-4 rounded mt-auto"

@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Slidebar from "../components/Slidebar";
-import lisst from "../../public/lisst.json";
 import axios from "axios";
 import { url } from "../host";
 
 const Notes = () => {
   const [isPdfOpen, setIsPdfOpen] = useState(false);
-  const [isVideoOpen, setIsVideoOpen] = useState(false); // State for video
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [pdfUrl, setPdfUrl] = useState("");
-  const [videoUrl, setVideoUrl] = useState(""); // Dynamic video URL
+  const [videoUrl, setVideoUrl] = useState("");
   const [chapters, setChapters] = useState([]);
   const [err, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [semesterId, setSemesterId] = useState("");
   const [subjectId, setSubjectId] = useState("");
+  const [completionStatus, setCompletionStatus] = useState({}); // State for completion status
 
   const openPdf = (url) => {
     setPdfUrl(url);
@@ -26,13 +26,13 @@ const Notes = () => {
   };
 
   const openVideo = (url) => {
-    setVideoUrl(url); // Set the dynamic video URL
-    setIsVideoOpen(true); // Open video viewer
+    setVideoUrl(url);
+    setIsVideoOpen(true);
   };
 
   const closeVideo = () => {
-    setIsVideoOpen(false); // Close video viewer
-    setVideoUrl(""); // Reset video URL
+    setIsVideoOpen(false);
+    setVideoUrl("");
   };
 
   useEffect(() => {
@@ -81,6 +81,20 @@ const Notes = () => {
     }))
   );
 
+  const allResources = [...pdfResources, ...videoResources]; // Combine both resources for completion tracking
+
+  const toggleCompletion = (resourceId) => {
+    setCompletionStatus((prev) => ({
+      ...prev,
+      [resourceId]: !prev[resourceId], // Toggle completion status
+    }));
+  };
+
+  const completionPercentage = () => {
+    const completedCount = Object.values(completionStatus).filter(Boolean).length;
+    return (completedCount / allResources.length) * 100 || 0; // Calculate completion percentage
+  };
+
   return (
     <div className="flex space-x-3 min-h-screen ">
       <Slidebar />
@@ -89,6 +103,18 @@ const Notes = () => {
 
         {loading && <p>Loading chapters...</p>}
         {err && <p className="text-red-500">{err}</p>}
+
+        {/* Completion Status Bar */}
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold">Completion Status</h2>
+          <div className="relative w-full h-6 bg-gray-300 rounded">
+            <div
+              className="absolute top-0 left-0 h-full bg-green-500 rounded"
+              style={{ width: `${completionPercentage()}%` }}
+            ></div>
+          </div>
+          <p className="text-right">{completionPercentage().toFixed(0)}% completed</p>
+        </div>
 
         <h2 className="text-2xl font-semibold mb-4">PDF Resources</h2>
         {pdfResources.length === 0 && !loading && <p>No PDF resources available.</p>}
@@ -108,6 +134,12 @@ const Notes = () => {
                 className="inline-block bg-green-300 hover:bg-green-400 text-black py-2 px-4 rounded mt-auto"
               >
                 Open PDF
+              </button>
+              <button
+                onClick={() => toggleCompletion(resource.resourceId)}
+                className="inline-block bg-blue-300 hover:bg-blue-400 text-black py-2 px-4 rounded mt-2"
+              >
+                {completionStatus[resource.resourceId] ? "Completed" : "Mark as Complete"}
               </button>
             </div>
           ))}
@@ -139,16 +171,22 @@ const Notes = () => {
               <iframe
                 width="100%"
                 height="300"
-                src={`https://www.youtube.com/embed/${videoUrl}?autoplay=1`} // Embed video using the video ID
+                src={`https://www.youtube.com/embed/${videoUrl}?autoplay=1`}
                 frameBorder="0"
                 allowFullScreen
                 className="border-0"
               ></iframe>
               <button
-                onClick={() => openVideo(video.resourceUrl)} // Use resourceUrl for video
+                onClick={() => openVideo(video.resourceUrl)}
                 className="inline-block bg-green-300 hover:bg-green-400 text-black py-2 px-4 rounded mt-auto"
               >
                 Watch Video
+              </button>
+              <button
+                onClick={() => toggleCompletion(video.resourceId)}
+                className="inline-block bg-blue-300 hover:bg-blue-400 text-black py-2 px-4 rounded mt-2"
+              >
+                {completionStatus[video.resourceId] ? "Completed" : "Mark as Complete"}
               </button>
             </div>
           ))}
@@ -163,7 +201,7 @@ const Notes = () => {
               <iframe
                 width="1000"
                 height="600"
-                src={`https://www.youtube.com/embed/${videoUrl}`} // Embed video using the video ID
+                src={`https://www.youtube.com/embed/${videoUrl}`}
                 title="Video Player"
                 frameBorder="0"
                 allowFullScreen
@@ -172,7 +210,6 @@ const Notes = () => {
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

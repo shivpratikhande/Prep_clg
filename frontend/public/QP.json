@@ -1,0 +1,29 @@
+{
+    "questionPapers": [
+      {
+        "title": "Internet Programming",
+        "pdfUrl": "https://example.com/path/to/internet_programming.pdf"
+      },
+      {
+        "title": "Computer Networks Security",
+        "pdfUrl": "https://example.com/path/to/computer_networks_security.pdf"
+      },
+      {
+        "title": "EEB",
+        "pdfUrl": "https://example.com/path/to/eeb.pdf"
+      },
+      {
+        "title": "ADSA",
+        "pdfUrl": "https://example.com/path/to/ads.pdf"
+      },
+      {
+        "title": "Software Engineering",
+        "pdfUrl": "https://example.com/path/to/software_engineering.pdf"
+      },
+      {
+        "title": "ADMT",
+        "pdfUrl": "https://example.com/path/to/admt.pdf"
+      }
+    ]
+  }
+  
